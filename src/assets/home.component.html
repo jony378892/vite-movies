@@ -1,0 +1,181 @@
+@if(wishlistNotification){
+<p class="text-sm text-[#49b224] text-center">{{tempMovieTitle}} is added to wishlist!</p>
+}
+<div class="flex sm:flex-row gap-4 mx-auto container pb-10 ">
+    <div class="w-full flex flex-col relative">
+
+        <section class=" lg:mx-auto lg:container flex items-center justify-between px-2">
+            <p class="text-xl font-semibold text-left text-amber-600 py-6 underline underline-offset-4 decoration-2 cursor-pointer"
+                (click)="resetGenre()">
+                Movies
+                List</p>
+            <div class="flex gap-3 items-center">
+                <i class="fa-solid fa-list-ul  rounded-md p-2 -py-0.5 cursor-pointer"
+                    [ngClass]="{'bg-amber-200' : movieStyle == 'side'}" (click)="movieStyleSide()"></i>
+                <i class="fa-solid fa-grip text-xl   rounded-md px-2  cursor-pointer"
+                    [ngClass]="{'bg-amber-200' : movieStyle == 'grid'}" (click)="movieStyleGrid()"></i>
+            </div>
+        </section>
+        <div class=" self-end items-center mb-2 cursor-pointer relative mr-3">
+            <div class="flex gap-2 items-center" (click)="changeGenreStatus()">
+                <i class="fa-solid fa-filter text-sm"></i>
+                <p>Filter</p>
+            </div>
+
+            @if(genreStatus){
+            <div class="flex flex-col divide-y absolute top-7 -right-3 bg-white border z-20">
+                <p class="py-1 bxs:py-2 px-3 text-gray-800 hover:text-amber-600" (click)="resetGenre()">Default
+                </p>
+                @for(i of genres; track i){
+                <p class="py-2 px-3 text-gray-800 hover:text-amber-600" (click)="updateGenre(i)">{{i}}</p>
+                }
+            </div>
+            }
+
+        </div>
+        @if(movieStyle == 'side'){
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3" @gridSide>
+            @for(movie of ms.movies; track movie.id; let i = $index, c = $count){
+            <div class="flex p-3  w-full items-center justify-between border border-gray-300 rounded-lg bg-gray-50">
+                <div class="flex gap-3 items-center ">
+                    <div class="relative ">
+                        <img [src]="movie.image" alt="Movie name is '{{movie.title}}'"
+                            class="border-gray-100 rounded-md h-36 sm:h-32 lg:h-36   w-auto cursor-pointer"
+                            (click)="showAnimation(i)">
+                        <i class="fa-solid fa-heart absolute right-2 text-lg text-red-300 hover:text-red-600 hover:scale-110  top-1 "
+                            [ngClass]="{'text-red-600': movie.wishlist == true}" (click)="addToWishlist(i)"></i>
+                    </div>
+                    <div class="flex flex-col gap-1 self-start text-sm group cursor-pointer" (click)="movieDetail(i)">
+                        <p
+                            class="text-gray-800 group-hover:underline cursor-pointer group-hover:text-amber-700 font-medium">
+                            {{movie.title}}
+                        </p>
+                        <p class="text-sm pr-auto text-gray-700"> Genre: <span
+                                class="font-normal text-gray-800">{{movie.genre}}</span>
+                        </p>
+                        <p class=" text-gray-600">{{movie.duration}} </p>
+                        <p class="text-gray-700 mt-1">{{movie.release}} </p>
+                        <p class="text-gray-700 mt-1">
+                            <i class="fa-solid fa-star text-amber-500"></i>
+                            {{movie.rating}} ({{movie.ratingQty}})
+                        </p>
+                    </div>
+                </div>
+                <i class="fa-solid fa-circle-info text-lg text-blue-300 hover:text-blue-500"
+                    (click)="showAnimation(i)"></i>
+            </div>
+            }
+            @if(user.loginStatus == 'admin'){
+            <div class="flex flex-col items-center justify-center w-auto h-auto border border-gray-300 hover:shadow-lg relative z-10 cursor-pointer gap-4 py-3 rounded-lg"
+                (click)="
+                            openNewMovieForm = true">
+                <i class="fa-solid fa-plus text-7xl text-gray-300"></i>
+                <p class="text-2xl text-center text-gray-400">Add Movie</p>
+            </div>
+            }
+        </div>
+        }
+        @if(movieStyle == 'grid'){
+        <div class=" grid grid-cols-2 bxs:grid-cols-3  sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-3 gap-y-10 -z-10 bg-gray-50"
+            @gridSide>
+            @for(movie of ms.movies; track movie.id; let i = $index){
+            <div class="flex flex-col border border-gray-300 hover:shadow-lg relative z-10">
+                <img [src]="movie.image" alt="the movie: {{movie.title}}"
+                    class="w-auto h-[250px] lg:h-[280px] xl:h-[310px]" (click)="showAnimation(i)">
+                <div class="space-y-1 p-3 h-fit sm:text-sm">
+                    <p class="text-sm sm:text-md font-medium line-clamp-1 text-nowrap" (click)="movieDetail(i)">
+                        {{movie.title}}</p>
+                    <p class="text-xs text-gray-700">{{movie.duration}} </p>
+                    <p class="text-xs text-gray-800">{{movie.release}} </p>
+                    <p class="text-gray-700 mt-1">
+                        <i class="fa-solid fa-star text-amber-500"></i>
+                        {{movie.rating}} ({{movie.ratingQty}})
+                    </p>
+                </div>
+                <i class="fa-solid fa-heart text-red-300 hover:text-red-600 absolute right-3 top-3 text-xl"
+                    [ngClass]="{'text-red-600': movie.wishlist === true}" (click)="addToWishlist(i)"></i>
+            </div>
+
+            }
+            @if(user.loginStatus === 'admin'){
+            <div class="flex flex-col items-center justify-center w-auto h-auto border border-gray-300 hover:shadow-lg relative  cursor-pointer gap-4"
+                (click)="
+                openNewMovieForm = true">
+                <i class="fa-solid fa-plus text-7xl text-gray-300"></i>
+                <p class="text-2xl text-center text-gray-400">Add Movie</p>
+            </div>
+            }
+
+        </div>
+        }
+    </div>
+</div>
+
+
+@if(showBackground){
+<div class="fixed h-lvh w-screen inset-0 bg-transparent/40 flex items-center justify-center z-40" @openClose>
+    <i class="fa-solid fa-xmark absolute top-10 sm:top-4 right-5 text-white text-4xl cursor-pointer"
+        (click)="showBackground = false"></i>
+    <img [src]="ms.movies[index].image" alt="image.title" class="h-[450px] sm:h-[550px] md:h-[600px] w-auto">
+</div>
+}
+
+@if(openNewMovieForm){
+<div class="relatiev fixed h-lvh w-screen inset-0 bg-transparent/40 flex items-center justify-center z-30" @openClose>
+    <i class="fa-solid fa-xmark absolute top-10 sm:top-4 right-5 text-white text-4xl cursor-pointer"
+        (click)="openNewMovieForm = false"></i>
+    <form alt="image.title"
+        class="flex flex-col gap-2 border border-gray-300 rounded-lg p-5 bg-white h-fit w-full sm:w-2/3 lg:w-1/2"
+        [formGroup]="newMovieForm">
+        <p class="text-2xl font-semibold  mb-5 text-center">Add new movie</p>
+        <div class="grid grid-cols-3">
+            <label> Id: </label>
+            <input type="text" class="w-full col-span-2 px-2 py-1 rounded-md border border-gray-400 mr-10"
+                formControlName="id">
+        </div>
+        <div class="grid grid-cols-3">
+            <label> Title: </label>
+            <input type="text" class="w-full col-span-2 px-2 py-1 rounded-md border border-gray-400 mr-10"
+                placeholder="Moana" formControlName="title">
+        </div>
+        <div class="grid grid-cols-3">
+            <label> Description: </label>
+            <textarea type="text" class="w-full col-span-2 px-2 py-1 rounded-md border border-gray-400 mr-10 h-20"
+                placeholder="type about the movie" formControlName="description"></textarea>
+        </div>
+        <div class="grid grid-cols-3">
+            <label> Genre: </label>
+            <select class="w-full col-span-2 px-2 py-1 rounded-md border border-gray-400 mr-10 bg-white"
+                formControlName="genre">
+                <option value="">Select</option>
+                @for(genre of genres; track genre){
+                <option [value]="genre">{{genre}}</option>
+                }
+            </select>
+        </div>
+        <div class="grid grid-cols-3">
+            <label> Duration: </label>
+            <input type="text" class="w-full col-span-2 px-2 py-1 rounded-md border border-gray-400 mr-10"
+                placeholder="2h 34m" formControlName="duration">
+        </div>
+        <div class="grid grid-cols-3">
+            <label> Release: </label>
+            <input type="text" class="w-full col-span-2 px-2 py-1 rounded-md border border-gray-400 mr-10"
+                placeholder="2019" formControlName="release">
+        </div>
+        <div class="grid grid-cols-3">
+            <label> Director: </label>
+            <input type="text" class="w-full col-span-2 px-2 py-1 rounded-md border border-gray-400 mr-10"
+                placeholder="Carlos" formControlName="director">
+        </div>
+        <div class="grid grid-cols-3">
+            <label> Actors: </label>
+            <input type="text" class="w-full col-span-2 px-2 py-1 rounded-md border border-gray-400 mr-10"
+                placeholder="actor1, actor2, actor3" formControlName="actors">
+        </div>
+        <button
+            class="mt-5 px-10 py-1 bg-blue-500 rounded-md text-white font-semibold w-fit disabled:cursor-not-allowed"
+            [disabled]="!newMovieForm.valid" (click)="newMovieSubmit()">Submit </button>
+    </form>
+</div>
+}
