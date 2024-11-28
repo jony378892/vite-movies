@@ -13,13 +13,16 @@ export default function SignUp() {
     if (!validate) {
       setSignUpData((prevData) => [...prevData, formData]);
       console.log("Collected Data:", [...signUpData, formData]);
-      setLoginNotification(true);
+      setLoginNotification("SignUp successful");
       setTimeout(() => {
-        setLoginNotification(false);
+        setLoginNotification("");
       }, 1200);
       setFormData({});
     } else {
-      console.log(`${formData.email} is already registered`);
+      setLoginNotification(`${formData.email} is already registered`);
+      setTimeout(() => {
+        setLoginNotification("");
+      }, 1200);
     }
     setFormData({});
   }
@@ -37,7 +40,7 @@ export default function SignUp() {
     <div className="relative h-fit sm:h-svh w-screen sm:bg-gray-100 flex justify-center sm:pt-10">
       {loginNotification && (
         <p className="absolute top-5 bg-green-500 rounded-full text-white px-7 py-0.5 z-10 text-sm font-medium shadow-lg">
-          SignUp successful
+          {loginNotification}
         </p>
       )}
       <form
