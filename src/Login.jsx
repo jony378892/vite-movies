@@ -1,19 +1,29 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { userContext } from "./contextApi";
+import { Link, useNavigate } from "react-router-dom";
+import { userContext, loginStatusContext } from "./contextApi";
 
 export default function Login() {
   const { signUpData } = useContext(userContext);
   const [loginData, setLoginData] = useState({});
+  const [loginNotification, setLoginNotification] = useState(false);
+  const { setLoginStatus } = useContext(loginStatusContext);
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
     const user = signUpData.find((x) => x.email === loginData.email);
+
     if (!user) {
       console.log(`${loginData.email} isn't registered`);
     } else {
       if (user.password === loginData.password) {
         console.log("Login successful");
+        setLoginStatus("true");
+        setLoginNotification(true);
+        setTimeout(() => {
+          setLoginNotification(false);
+          navigate("/");
+        }, 1200);
       } else {
         console.log("Incorrect password");
       }
@@ -28,7 +38,13 @@ export default function Login() {
 
   return (
     <>
-      <div className="h-fit sm:h-svh w-screen sm:bg-gray-100 flex justify-center sm:pt-16">
+      <div className="relative h-fit sm:h-svh w-screen sm:bg-gray-100 flex justify-center sm:pt-16">
+        {loginNotification && (
+          <p className="absolute top-10 bg-green-500 rounded-full text-white px-7 py-0.5 z-10 text-sm font-medium shadow-lg">
+            Login successful
+          </p>
+        )}
+
         <form
           className="max-w-2xl flex flex-col gap-3 rounded-2xl px-5 sm:px-10 md:px-20 md:mx-24 lg:px-20 py-8 sm:border sm:shadow-lg mx-auto bg-white h-fit"
           onSubmit={handleSubmit}>

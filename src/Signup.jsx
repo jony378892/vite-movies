@@ -5,6 +5,7 @@ import { userContext } from "./contextApi";
 export default function SignUp() {
   const { signUpData, setSignUpData } = useContext(userContext);
   const [formData, setFormData] = useState({});
+  const [loginNotification, setLoginNotification] = useState(false);
 
   function handleSignUpData(e) {
     e.preventDefault();
@@ -12,11 +13,15 @@ export default function SignUp() {
     if (!validate) {
       setSignUpData((prevData) => [...prevData, formData]);
       console.log("Collected Data:", [...signUpData, formData]);
+      setLoginNotification(true);
+      setTimeout(() => {
+        setLoginNotification(false);
+      }, 1200);
       setFormData({});
     } else {
       console.log(`${formData.email} is already registered`);
     }
-    setFormData({});
+    setFormData({});      
   }
 
   function handleForm(e) {
@@ -29,7 +34,12 @@ export default function SignUp() {
   }
 
   return (
-    <div className="h-fit sm:h-svh w-screen sm:bg-gray-100 flex justify-center sm:pt-10">
+    <div className="relative h-fit sm:h-svh w-screen sm:bg-gray-100 flex justify-center sm:pt-10">
+      {loginNotification && (
+        <p className="absolute top-5 bg-green-500 rounded-full text-white px-7 py-0.5 z-10 text-sm font-medium shadow-lg">
+          SignUp successful
+        </p>
+      )}
       <form
         className="max-w-2xl flex flex-col gap-3 rounded-2xl px-5 sm:px-10 md:px-20 md:mx-24 lg:px-20 py-8 sm:border sm:shadow-lg mx-auto bg-white h-fit"
         onSubmit={handleSignUpData}>
