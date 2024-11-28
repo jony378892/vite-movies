@@ -21,7 +21,7 @@ export default function SignUp() {
     } else {
       console.log(`${formData.email} is already registered`);
     }
-    setFormData({});      
+    setFormData({});
   }
 
   function handleForm(e) {
@@ -67,21 +67,6 @@ export default function SignUp() {
             required
             onChange={handleForm}
           />
-        </div>
-        <div className="flex-col flex gap-2">
-          <label className="font-normal text-sm sm:text-base">Role</label>
-          <select
-            className="bg-white border border-gray-400 py-1.5 px-2 rounded-md text-sm sm:text-base"
-            name="role"
-            value={formData.role || ""}
-            required
-            onChange={handleForm}>
-            <option className="text-gray-600" value="">
-              Select
-            </option>
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
-          </select>
         </div>
         <div className="flex-col flex gap-2">
           <label className="font-normal text-sm sm:text-base">Password</label>
