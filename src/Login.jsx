@@ -5,7 +5,7 @@ import { userContext, loginStatusContext } from "./contextApi";
 export default function Login() {
   const { signUpData } = useContext(userContext);
   const [loginData, setLoginData] = useState({});
-  const [loginNotification, setLoginNotification] = useState(false);
+  const [loginNotification, setLoginNotification] = useState("");
   const { setLoginStatus } = useContext(loginStatusContext);
   const navigate = useNavigate();
 
@@ -17,15 +17,17 @@ export default function Login() {
       console.log(`${loginData.email} isn't registered`);
     } else {
       if (user.password === loginData.password) {
-        console.log("Login successful");
         setLoginStatus("true");
-        setLoginNotification(true);
+        setLoginNotification("Login successful");
         setTimeout(() => {
-          setLoginNotification(false);
+          setLoginNotification("");
           navigate("/");
         }, 1200);
       } else {
-        console.log("Incorrect password");
+        setLoginNotification("Incorrect Password");
+        setTimeout(() => {
+          setLoginNotification("");
+        }, 1200);
       }
     }
   }
@@ -40,8 +42,8 @@ export default function Login() {
     <>
       <div className="relative h-fit sm:h-svh w-screen sm:bg-gray-100 flex justify-center sm:pt-16">
         {loginNotification && (
-          <p className="absolute top-10 bg-green-500 rounded-full text-white px-7 py-0.5 z-10 text-sm font-medium shadow-lg">
-            Login successful
+          <p className="absolute top-10 bg-green-500 rounded-md text-white px-7 py-0.5 z-10 text-sm font-medium shadow-lg">
+            {loginNotification}
           </p>
         )}
 
@@ -54,14 +56,14 @@ export default function Login() {
             <input
               type="text"
               placeholder="exanple@email.com"
-              className="border border-gray-400 rounded-md px-2 text-sm py-1 sm:text-base text-gray-700"
+              className="border border-gray-400 rounded-md px-2 text-sm py-1 sm:text-base text-gray-700 placeholder:text-gray-400"
               required
               name="email"
               onChange={handleForm}
             />
           </div>
           <div className="flex-col flex gap-2">
-            <label className="font-normal text-sm sm:text-base">Password</label>
+            <label className="font-normal text-sm sm:text-base placeholder:text-gray-400">Password</label>
             <input
               type="text"
               placeholder="12345"

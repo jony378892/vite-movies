@@ -14,7 +14,7 @@ export default function Details() {
         <section className="lg:border border-gray-300 rounded-2xl p-3 lg:h-[500px]">
           <div className="flex flex-col gap-2 mb-3">
             <p className="text-xl bxs:text-3xl hyphens-auto">{movie.title} </p>
-            <p className="rounded-full text-sm text-nowrap pr-auto">
+            <p className="rounded-md text-sm text-nowrap pr-auto">
               {" "}
               Genre: <span className="font-medium">{movie.genre}</span>
             </p>
@@ -24,7 +24,7 @@ export default function Details() {
             </div>
           </div>
           <div className="flex gap-3 items-center">
-            <button className=" flex gap-2  py-0.5 px-3 bg-amber-500 hover:bg-amber-500/90 rounded-full cursor-pointer group text-white text-sm font-medium">
+            <button className=" flex gap-2  py-0.5 px-3 bg-amber-500 hover:bg-amber-500/90 rounded-md cursor-pointer group text-white text-sm font-medium">
               Add to wishlist
             </button>
           </div>

@@ -93,7 +93,7 @@ export default function Home() {
       <p className="text-xl underline text-amber-500 font-semibold py-5">Movies List</p>
       {notification && (
         <p className="absolute top-5 flex justify-center inset-x-0">
-          <span className="bg-red-500/90 rounded-full text-white px-7 py-0.5 text-sm font-medium ">
+          <span className="bg-red-500/90 rounded-md text-white px-7 py-0.5 text-sm font-medium ">
             You have to login First
           </span>
         </p>

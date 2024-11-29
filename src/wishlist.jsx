@@ -6,11 +6,10 @@ import { moviesContext } from "./contextApi";
 
 export default function Wishlist() {
   const navigate = useNavigate();
-  const { movies, setMovies } = useContext(moviesContext); // Ensure `setMovies` is provided in the context
+  const { movies, setMovies } = useContext(moviesContext);
   const [wishListMovies, setWishListMovies] = useState([]);
 
   useEffect(() => {
-    // Update wishlist movies whenever the context changes
     setWishListMovies(movies.filter((movie) => movie.wishlist === true));
   }, [movies]);
 
@@ -20,7 +19,7 @@ export default function Wishlist() {
 
   function toggleDelete(movieId) {
     const updatedMovies = movies.map((movie) => (movie.id === movieId ? { ...movie, wishlist: false } : movie));
-    setMovies(updatedMovies); // Update the context
+    setMovies(updatedMovies);
   }
 
   const movieList = wishListMovies.map((movie) => {

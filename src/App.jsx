@@ -18,25 +18,23 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div>
-        <moviesContext.Provider value={{ movies, setMovies }}>
-          <searchContext.Provider value={{ search, setSearch }}>
-            <userContext.Provider value={{ signUpData, setSignUpData }}>
-              <loginStatusContext.Provider value={{ loginStatus, setLoginStatus }}>
-                <Navbar />
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/details/:id/:title" element={<Details />} />
-                  <Route path="/wishlist" element={<Wishlist />} />
-                  <Route path="/signUp" element={<SignUp />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/user" element={<User />} />
-                </Routes>
-              </loginStatusContext.Provider>
-            </userContext.Provider>
-          </searchContext.Provider>
-        </moviesContext.Provider>
-      </div>
+      <moviesContext.Provider value={{ movies, setMovies }}>
+        <searchContext.Provider value={{ search, setSearch }}>
+          <userContext.Provider value={{ signUpData, setSignUpData }}>
+            <loginStatusContext.Provider value={{ loginStatus, setLoginStatus }}>
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/details/:id/:title" element={<Details />} />
+                <Route path="/wishlist" element={<Wishlist />} />
+                <Route path="/signUp" element={<SignUp />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/user" element={<User />} />
+              </Routes>
+            </loginStatusContext.Provider>
+          </userContext.Provider>
+        </searchContext.Provider>
+      </moviesContext.Provider>
     </BrowserRouter>
   );
 }

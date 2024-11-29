@@ -39,7 +39,7 @@ export default function SignUp() {
   return (
     <div className="relative h-fit sm:h-svh w-screen sm:bg-gray-100 flex justify-center sm:pt-10">
       {loginNotification && (
-        <p className="absolute top-5 bg-green-500 rounded-full text-white px-7 py-0.5 z-10 text-sm font-medium shadow-lg">
+        <p className="absolute top-5 bg-green-500 rounded-md text-white px-7 py-0.5 z-10 text-sm font-medium shadow-lg">
           {loginNotification}
         </p>
       )}
@@ -52,7 +52,7 @@ export default function SignUp() {
           <input
             type="text"
             placeholder="John Doe"
-            className="border border-gray-400 rounded-md px-2 py-1 text-sm sm:text-base placeholder:text-gray-700"
+            className="border border-gray-400 rounded-md px-2 py-1 text-sm sm:text-base placeholder:text-gray-400"
             name="name"
             value={formData.name || ""}
             required
@@ -64,7 +64,7 @@ export default function SignUp() {
           <input
             type="text"
             placeholder="example@email.com"
-            className="border border-gray-400 rounded-md px-2 py-1 text-sm sm:text-base placeholder:text-gray-700"
+            className="border border-gray-400 rounded-md px-2 py-1 text-sm sm:text-base placeholder:text-gray-400"
             name="email"
             value={formData.email || ""}
             required
@@ -76,7 +76,7 @@ export default function SignUp() {
           <input
             type="password"
             placeholder="1234"
-            className="border border-gray-400 rounded-md px-2 py-1 text-sm sm:text-base placeholder:text-gray-700"
+            className="border border-gray-400 rounded-md px-2 py-1 text-sm sm:text-base placeholder:text-gray-400"
             name="password"
             value={formData.password || ""}
             required
